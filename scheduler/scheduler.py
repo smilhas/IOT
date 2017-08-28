@@ -1,4 +1,4 @@
-# PARA QUE EL SIGUIENTE PROGRAMA FUNCIONE, HACE FALTA UN SERVIDOR MQTT QUE ESTE CORRIENDO EN LA IP ESPECIFICADA EN EL
+﻿# PARA QUE EL SIGUIENTE PROGRAMA FUNCIONE, HACE FALTA UN SERVIDOR MQTT QUE ESTE CORRIENDO EN LA IP ESPECIFICADA EN EL
 # ARCHIVO DE CONFIGURACION, EN EL PUERTO CORRESPONDIENTE Y UNA BASE DE DATOS DONDE SE GUARDARAN UNA SERIE DE EVENTOS
 # QUE SE QUIERAN EJECUTAR.
 
@@ -41,7 +41,7 @@ class Scheduler:
         self.MQTTpoolTime = 0
         self.loglevel = self.config['Log']['log level']
         self.numericLevel = getattr(logging, self.loglevel.upper(), None)
-        logging.basicConfig(filename='sceduler.log',
+        logging.basicConfig(filename='scheduler.log',
                             level=self.numericLevel,
                             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.logger = logging.getLogger('scheduler_logger')
