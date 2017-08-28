@@ -41,8 +41,7 @@ class Scheduler:
         self.MQTTpoolTime = 0
         self.loglevel = self.config['Log']['log level']
         self.numericLevel = getattr(logging, self.loglevel.upper(), None)
-        logging.basicConfig(filename='scheduler.log',
-                            level=self.numericLevel,
+        logging.basicConfig(level=self.numericLevel,
                             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.logger = logging.getLogger('scheduler_logger')
         self.logger.info('Initializing...')
