@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <!//django>
+  <head>
+
+  <body>
+<h2 class="title">Por favor ingrese los datos del evento </h2>
+<form method="post"/ingresar 'action'seguido del servidor>
+<label for='Evento'>Nombre del evento</label>
+<textarea rows="1" cols="30" name="Evento" required autofocus>
+</textarea>
+<label for="Descripcion">Descripcion del evento</label>
+<textarea rows="4" cols="60" name="Descripcion">
+</textarea>
+
+<label for="fecha">Fecha del evento</label>
+<input type="date" name="fecha" required>
+
+<label for="hora">Hora del evento</label>
+<input type="time" name="hora" required>
+
+<label for="Repeticion">Repeticion del evento</label>
+<input type="radio" name="Repeticion" value="Diariamente"required>Diariamente<br>
+<input type="radio" name="Repeticion" value="Semanalmente">Semanalmente<br>
+<input type="radio" name="Repeticion" value="Mensualmente">Mensualmente<br>
+<input type="radio" name="Repeticion" value="Nunca">Nunca<br><br>
+
+<label for="Topico">Topico</label>
+<textarea rows="1" cols="30" name="Topico" required></textarea><br>
+
+<label for="Valor">Valor</label>
+<textarea rows="1" cols="30" name="Valor" required>
+</textarea><br>
+
+<form action="{{ url_for('add_ev') }}">
+<input type="submit" value="Enviar">
+</form>
+<form action="{{ url_for('form') }}">
+<input type="submit" value="Volver a pagina principal">
+</form>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+  <html>
+    <head>
+    <style>
+    table, td, th {border: 1px solid black; padding: 10px} </style>
+    </head>
+
+  <body>
+    <h1>Documentacion DB</h1>
+    <p>Las siguientes tablas se realizaran en MySQL 5.6.36.0
+    Descarga: <a>https://dev.mysql.com/downloads/file/?id=470568</a><br>
+    Tablas:
+    <li>Topicos: (sensores o informacion a la que pueden suscribirse)</li>
+    <li>Tipo de datos</li>
+    <li>Eventos </li>
+    <li>Acciones (que sucede ante la actualizacion de un determinado dato)</li>
+ </p>
+    <p><b>Tabla topicos </b><br>*seria ideal construirla con estructura de directorio (LDAP)</p>
+    <table>
+    <tr><th>ID topico</th><th>Topico</th><th>Descripcion</th><th>ID tipo de dato</th></tr>
+    <tr><td> </td><td> </td><td> </td><td> </td></tr>
+    <tr><td> </td><td> </td><td> </td><td> </td></tr>
+    </table>
+    <p><b>Tabla tipo de datos </b></p>
+    <table>
+    <tr><th>ID tipo de dato</th><th>Tipo de dato</th><th>Descripcion</th></tr>
+    <tr><td> </td><td>Entero</td><td></td></tr>
+    <tr><td> </td><td>Flotante</td><td></td></tr>
+    <tr><td> </td><td>On/Off</td><td></td></tr>
+    <tr><td> </td><td>Texto</td><td></td></tr>
+    </table>
+    <p><b>Tabla Eventos</b></p>
+    <table>
+    <tr><th>ID Evento</th><th>Nombre del Evento</th><th>ID Topico</th><th>Repeticion</th></tr>
+    <tr><td> </td><td></td><td></td><td></td></tr>
+    <tr><td> </td><td></td><td></td><td></td></tr>
+    <tr><td> </td><td></td><td></td><td></td></tr>
+    <tr><td> </td><td></td><td></td><td></td></tr>
+    </table>
+    <p><b>Acciones</b></p>
+    <table>
+    <tr><th>ID Accion</th><th>ID del evento</th><th>  ID topico</th><th>Valor del topico</th><th>Descripcion</th></tr>
+    <tr><td> </td><td></td><td></td><td></td><td></td></tr>
+    <tr><td> </td><td></td><td></td><td></td><td></td></tr>
+    <tr><td> </td><td></td><td></td><td></td><td></td></tr>
+    <tr><td> </td><td></td><td></td><td></td><td></td></tr>
+    </table>
+</body>
+</html>

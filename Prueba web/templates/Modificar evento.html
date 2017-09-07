@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <!//django>
+  <head>
+
+  <body>
+<h2 class="title">Por favor ingrese los datos del evento </h2>
+<form method="post"/ingresar 'action'seguido del servidor>
+<label for='Evento'>Nombre del evento</label>
+<textarea rows="1" cols="30" name="Evento" required autofocus >
+{{nombre_ev}}</textarea>
+<label for="Descripcion">Descripcion del evento</label>
+<textarea rows="4" cols="60" name="Descripcion">
+    {{desc}}
+</textarea>
+
+<label for="fecha">Fecha del evento</label>
+<input type="date" name="fecha" value = {{fecha}} required>
+
+<label for="hora">Hora del evento</label>
+<input type="time" name="hora" value = {{hora}} required>
+
+<label for="Repeticion">Repeticion del evento</label>
+
+
+
+<input id = "Diariamente" type="radio" name="Repeticion" value="Diariamente">Diariamente<br>
+<input id = "Semanalmente" type="radio" name="Repeticion" value="Semanalmente">Semanalmente<br>
+<input id = "Mensualmente" type="radio" name="Repeticion" value="Mensualmente">Mensualmente<br>
+<input id = "Nunca" type="radio" name="Repeticion" value="Nunca">Nunca<br><br>
+<script>
+  switch("{{repe}}"){
+      case "Diariamente" :
+        document.getElementById("Diariamente").checked = true;
+        break;
+
+      case "Semanalmente" :
+        document.getElementById("Semanalmente").checked = true;
+        break;
+
+      case "Mensualmente" :
+        document.getElementById("Mensualmente").checked = true;
+        break;
+
+      case "Nunca" :
+        document.getElementById("Nunca").checked = true;
+        break;
+  }
+</script>
+
+<label for="Topico">Topico</label>
+<textarea rows="1" cols="30" name="Topico" required>{{topico}}</textarea><br>
+
+<label for="Valor">Valor</label>
+<textarea rows="1" cols="30" name="Valor" required>{{valor}}
+</textarea><br>
+
+<br>
+<form action="{{ url_for('mod_ev') }}">
+<input type="submit" value="Enviar">
+</form>
+<br>
+<form action="{{ url_for('form') }}">
+<input type="submit" value="Volver a pagina principal">
+</form>
+  </body>
+</html>
