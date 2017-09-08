@@ -95,73 +95,73 @@ class Scheduler:
             self.logger.info('No hay eventos')
         else:
             min_date = min(Fechasarr)
-        j=0
-        for i in Fechasarr:
-            if i<=time.time():
-                execev.append(IDS[j])
-            j = j + 1
-        #min_date = Prox_evento.find_one(sort=[("Fecha", 1)])["Fecha"]
+            j=0
+            for i in Fechasarr:
+                if i<=time.time():
+                    execev.append(IDS[j])
+                j = j + 1
+            #min_date = Prox_evento.find_one(sort=[("Fecha", 1)])["Fecha"]
 
 
 
-        #min_date = Prox_evento.find_one(sort=[("Fecha", 1)])["Fecha"]
-        if time.time() >= min_date:
-            #print('timestamp maquina=' + time.time())
-            #print('min_date =' + min_date)
+            #min_date = Prox_evento.find_one(sort=[("Fecha", 1)])["Fecha"]
+            if time.time() >= min_date:
+                #print('timestamp maquina=' + time.time())
+                #print('min_date =' + min_date)
 
-            self.MQTTev = True
-            #for prox_ev_docs in Prox_evento.find({"Fecha": {"$lte": datetime.datetime.today()}}):
-            for prox_ev_doc in execev:
-                try:
-                    ev_doc = Prox_evento.find_one({"_id": prox_ev_doc})
-                    self.topicos.append(ev_doc['Topico'])
-                    self.valores.append(ev_doc['Valor'])
-                    if ev_doc['Repeticion'] == "Diariamente":
-                        horario = datetime.datetime.fromtimestamp(time.time()+86400).strftime('%Y-%m-%d %H:%M')
-                        Fechaup, Horaup=horario.split(" ")
-                        print(Prox_evento.find_one({"_id": prox_ev_doc})['Fecha'])
-                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
-                        print(Prox_evento.find_one({"_id": prox_ev_doc})['Fecha'])
-                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
-                    elif ev_doc['Repeticion'] == "Semanalmente":
-                        horario = datetime.datetime.fromtimestamp(time.time() + 604800).strftime('%Y-%m-%d %H:%M')
-                        Fechaup, Horaup = horario.split(" ")
-                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
-                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
-                    elif ev_doc['Repeticion'] == "Mensualmente":
-                        horario = datetime.datetime.fromtimestamp(time.time() + 18144000).strftime('%Y-%m-%d %H:%M')
-                        Fechaup, Horaup = horario.split(" ")
-                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
-                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
-                    elif ev_doc['Repeticion'] == "Nunca":
-                        Prox_evento.remove({"_id": prox_ev_doc})
-                    else:
-                        self.logger.error('Event format in MONGODB is not correct')
-                except:
-                    self.logger.error('Hay un problema con la coleccion Prox_eventos en la base de datos IOT')
-
-
-                if (min_date - time.time()) < self.poolTime:
-                    timedif = min_date - time.time()
-                    self.MQTTpoolTime = timedif
-        elif (min_date - time.time()) < self.poolTime:
-            timedif = min_date - time.time()
-            self.MQTTpoolTime = timedif
-        else:
-            self.logger.info('El proximo evento se ejecutara en un tiempo mayor al pooTime determinado')
+                self.MQTTev = True
+                #for prox_ev_docs in Prox_evento.find({"Fecha": {"$lte": datetime.datetime.today()}}):
+                for prox_ev_doc in execev:
+                    try:
+                        ev_doc = Prox_evento.find_one({"_id": prox_ev_doc})
+                        self.topicos.append(ev_doc['Topico'])
+                        self.valores.append(ev_doc['Valor'])
+                        if ev_doc['Repeticion'] == "Diariamente":
+                            horario = datetime.datetime.fromtimestamp(time.time()+86400).strftime('%Y-%m-%d %H:%M')
+                            Fechaup, Horaup=horario.split(" ")
+                            print(Prox_evento.find_one({"_id": prox_ev_doc})['Fecha'])
+                            Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
+                            print(Prox_evento.find_one({"_id": prox_ev_doc})['Fecha'])
+                            Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
+                        elif ev_doc['Repeticion'] == "Semanalmente":
+                            horario = datetime.datetime.fromtimestamp(time.time() + 604800).strftime('%Y-%m-%d %H:%M')
+                            Fechaup, Horaup = horario.split(" ")
+                            Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
+                            Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
+                        elif ev_doc['Repeticion'] == "Mensualmente":
+                            horario = datetime.datetime.fromtimestamp(time.time() + 18144000).strftime('%Y-%m-%d %H:%M')
+                            Fechaup, Horaup = horario.split(" ")
+                            Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
+                            Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
+                        elif ev_doc['Repeticion'] == "Nunca":
+                            Prox_evento.remove({"_id": prox_ev_doc})
+                        else:
+                            self.logger.error('Event format in MONGODB is not correct')
+                    except:
+                        self.logger.error('Hay un problema con la coleccion Prox_eventos en la base de datos IOT')
 
 
+                    if (min_date - time.time()) < self.poolTime:
+                        timedif = min_date - time.time()
+                        self.MQTTpoolTime = timedif
+            elif (min_date - time.time()) < self.poolTime:
+                timedif = min_date - time.time()
+                self.MQTTpoolTime = timedif
+            else:
+                self.logger.info('El proximo evento se ejecutara en un tiempo mayor al pooTime determinado')
 
-        # Creo un buffered cursor debido a que no me permitia no especificar el tipo, ademas este es el que mejor
-        # se ajusta a mis necesidades
-        # cursor = cnx.cursor(buffered=True)
-        # query = "SELECT GRIFINDOR, HUFELPAFF FROM hogwartz"
-        # cursor.execute(query)
 
-        # ACA TENGO QUE LEER LAS TABLAS Y ACTUALIZAR SELF.POOLTIME Y MQTTEV
 
-        self.logger.info('Tables correctly read and events successfully updated')
-        client.close()
+            # Creo un buffered cursor debido a que no me permitia no especificar el tipo, ademas este es el que mejor
+            # se ajusta a mis necesidades
+            # cursor = cnx.cursor(buffered=True)
+            # query = "SELECT GRIFINDOR, HUFELPAFF FROM hogwartz"
+            # cursor.execute(query)
+
+            # ACA TENGO QUE LEER LAS TABLAS Y ACTUALIZAR SELF.POOLTIME Y MQTTEV
+
+            self.logger.info('Tables correctly read and events successfully updated')
+            client.close()
         # cursor.close()
         # cnx.close()
 
