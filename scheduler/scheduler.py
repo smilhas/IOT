@@ -97,6 +97,9 @@ class Scheduler:
 
         #min_date = Prox_evento.find_one(sort=[("Fecha", 1)])["Fecha"]
         if time.time() >= min_date:
+            #print('timestamp maquina=' + time.time())
+            #print('min_date =' + min_date)
+
             self.MQTTev = True
             #for prox_ev_docs in Prox_evento.find({"Fecha": {"$lte": datetime.datetime.today()}}):
             for prox_ev_doc in execev:
@@ -105,22 +108,25 @@ class Scheduler:
                     self.topicos.append(ev_doc['Topico'])
                     self.valores.append(ev_doc['Valor'])
                     if ev_doc['Repeticion'] == "Diariamente":
+                        print(prox_ev_doc)
                         horario = datetime.datetime.fromtimestamp(min_date+86400).strftime('%Y-%m-%d %H:%M')
                         Fechaup, Horaup=horario.split(" ")
-                        Prox_evento.update_one({"ev_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
-                        Prox_evento.update_one({"ev_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
+                        print(Prox_evento.find_one({"_id": prox_ev_doc})['Fecha'])
+                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
+                        print(Prox_evento.find_one({"_id": prox_ev_doc})['Fecha'])
+                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
                     elif ev_doc['Repeticion'] == "Semanalmente":
                         horario = datetime.datetime.fromtimestamp(min_date + 604800).strftime('%Y-%m-%d %H:%M')
                         Fechaup, Horaup = horario.split(" ")
-                        Prox_evento.update_one({"ev_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
-                        Prox_evento.update_one({"ev_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
+                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
+                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
                     elif ev_doc['Repeticion'] == "Mensualmente":
                         horario = datetime.datetime.fromtimestamp(min_date + 18144000).strftime('%Y-%m-%d %H:%M')
                         Fechaup, Horaup = horario.split(" ")
-                        Prox_evento.update_one({"ev_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
-                        Prox_evento.update_one({"ev_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
+                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Fecha": Fechaup}})
+                        Prox_evento.update_one({"_id": prox_ev_doc}, {"$set": {"Hora": Horaup}})
                     elif ev_doc['Repeticion'] == "Nunca":
-                        Prox_evento.remove({"ev_id": prox_ev_doc})
+                        Prox_evento.remove({"_id": prox_ev_doc})
                     else:
                         self.logger.error('Event format in MONGODB is not correct')
                 except:
