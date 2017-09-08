@@ -84,9 +84,9 @@ class Scheduler:
             Fechasarr[j]=2
             Fechasarr[j] = time.mktime(datetime.datetime.strptime(i, "%Y-%m-%d").timetuple()) + datetime.timedelta(hours=int(h),minutes=int(m)).total_seconds()
             j = j + 1
-        j = 0
         execev=[]
         min_date = min(Fechasarr)
+        j=0
         for i in Fechasarr:
             if i<=time.time():
                 execev.append(IDS[j])
@@ -103,12 +103,12 @@ class Scheduler:
             self.MQTTev = True
             #for prox_ev_docs in Prox_evento.find({"Fecha": {"$lte": datetime.datetime.today()}}):
             for prox_ev_doc in execev:
+                print(execev)
                 try:
                     ev_doc = Prox_evento.find_one({"_id": prox_ev_doc})
                     self.topicos.append(ev_doc['Topico'])
                     self.valores.append(ev_doc['Valor'])
                     if ev_doc['Repeticion'] == "Diariamente":
-                        print(prox_ev_doc)
                         horario = datetime.datetime.fromtimestamp(min_date+86400).strftime('%Y-%m-%d %H:%M')
                         Fechaup, Horaup=horario.split(" ")
                         print(Prox_evento.find_one({"_id": prox_ev_doc})['Fecha'])
