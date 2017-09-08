@@ -90,17 +90,16 @@ class Scheduler:
             h, m = re.split(':', Horasarr[j])
             Fechasarr[j] = time.mktime(datetime.datetime.strptime(i, "%Y-%m-%d").timetuple()) + datetime.timedelta(hours=int(h),minutes=int(m)).total_seconds()
             j = j + 1
-        print(Fechasarr)
         execev=[]
-        min_date = min(Fechasarr)
+        if not Fechasarr:
+            self.logger.info('No hay eventos')
+        else:
+            min_date = min(Fechasarr)
         j=0
         for i in Fechasarr:
-
             if i<=time.time():
                 execev.append(IDS[j])
             j = j + 1
-        print(Fechasarr)
-        print(execev)
         #min_date = Prox_evento.find_one(sort=[("Fecha", 1)])["Fecha"]
 
 
@@ -113,7 +112,6 @@ class Scheduler:
             self.MQTTev = True
             #for prox_ev_docs in Prox_evento.find({"Fecha": {"$lte": datetime.datetime.today()}}):
             for prox_ev_doc in execev:
-                print(execev)
                 try:
                     ev_doc = Prox_evento.find_one({"_id": prox_ev_doc})
                     self.topicos.append(ev_doc['Topico'])
