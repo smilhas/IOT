@@ -80,31 +80,6 @@
   </tbody>
 </table>
 <br>
-    <h1 class="title">Proximos eventos</h1>
-    <table style='border:1px solid red border-collapse:collapse' border='1px'>
-    <thead>
-        <tr>
-            <th>Evento</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Repeticion</th>
-            <th>Topico</th>
-            <th>Valor</th>
-        </tr>
-    </thead>
-  <tbody>
-    {% for row in input_pe %}
-        <tr>
-      {% for elem in row %}
-        <td>{{elem}}</td>
-      {% endfor %}
-        </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-
-<br>
 <form action="{{ url_for('add_ev') }}">
 <input type="submit" value="Agregar evento">
 </form>

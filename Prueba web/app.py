@@ -57,10 +57,10 @@ def create_data_array():
         arr[index][6] = post["Valor"]
         index = index + 1
     return arr;
-
+"""
 def create_data_array_3():
     index = 0
-    for post in db.eventos.find():
+    for post in db.Prox_eventos.find():
         index = index + 1;
     arr = [[0 for j in range(6)] for i in range(index)]
     index = 0
@@ -73,6 +73,7 @@ def create_data_array_3():
         arr[index][5] = post["Valor"]
         index = index + 1
     return arr;
+"""
 
 def create_data_array_2():
     arr = []
@@ -90,8 +91,7 @@ def delete_from_db(id_2_delete):
 
 @app.route('/')
 def form():
-    return render_template('Pag Principal.html', input=create_data_array(), input_ev=create_data_array_2(),
-                           input_pe=create_data_array_3())
+    return render_template('Pag Principal.html', input=create_data_array(), input_ev=create_data_array_2())
 
 
 @app.route('/agregar_evento', methods = ['GET','POST'])
@@ -126,14 +126,14 @@ def add_ev():
                    }
         post_id = db.Prox_evento.insert_one(prox_ev).inserted_id
         print(post_id)
-        return render_template('Pag Principal.html', input=create_data_array(), input_ev=create_data_array_2(), input_pe=create_data_array_3())
+        return render_template('Pag Principal.html', input=create_data_array(), input_ev=create_data_array_2())
 
 @app.route('/borrar_ev', methods=['GET', 'POST'])
 def del_ev():
     if request.method == 'GET':
         id_2_delete = request.args['id']
         delete_from_db(id_2_delete);
-        return render_template('Pag Principal.html', input=create_data_array(), input_ev=create_data_array_2(), input_pe=create_data_array_3())
+        return render_template('Pag Principal.html', input=create_data_array(), input_ev=create_data_array_2())
 
 @app.route('/mod_ev', methods=['GET', 'POST'])
 def mod_ev():
@@ -168,8 +168,7 @@ def mod_ev():
         })
         db.Prox_evento.remove(({"Evento": id_2_mod}))
 
-    return render_template('Pag Principal.html', input=create_data_array(), input_ev=create_data_array_2(),
-                           input_pe=create_data_array_3())
+    return render_template('Pag Principal.html', input=create_data_array(), input_ev=create_data_array_2())
 
 
 #@app.route('/enviar_evento', methods = ['GET','POST'])
